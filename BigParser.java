@@ -20,6 +20,7 @@ final public class BigParser {
 	// private static String authId = null;
 	static String prod_uri = "https://www.bigparser.com/APIServices/";
 	static String qa_uri = "https://qa.bigparser.com/APIServices/";
+
 	/**
 	 * This method makes generic post calls
 	 * 
@@ -33,7 +34,7 @@ final public class BigParser {
 	 */
 
 	private static String post(String endpoint, Map<String, String> headers, String data) {
-//		System.out.println(data);
+		// System.out.println(data);
 		StringBuilder response = new StringBuilder();
 		try {
 			URL uri = new URL(endpoint);
@@ -110,12 +111,15 @@ final public class BigParser {
 		return response.toString();
 	}
 
- /** This method performs the task of login into BigParser account and
-	 * fetch authId for future calls
+	/**
+	 * This method performs the task of login into BigParser account and fetch
+	 * authId for future calls
 	 * 
-	 * @param emailId emailId/username of your account
+	 * @param emailId
+	 *            emailId/username of your account
 	 * 
-	 * @param password password to login into BigParser account
+	 * @param password
+	 *            password to login into BigParser account
 	 * 
 	 * @return String returns the response as JSON Object
 	 */
@@ -220,7 +224,6 @@ final public class BigParser {
 		return "please check your request";
 	}
 
-
 	/**
 	 * Function to fetch header of a grid. gridId is required.
 	 *
@@ -299,18 +302,14 @@ final public class BigParser {
 				header.put("Content-Type", "application/json");
 				header.put("authId", authId);
 				String response = post(uri, header, JSONData);
-//				System.out.println(response);
 				int startOfCount = response.indexOf("count");
 				int startOfRows = response.indexOf("rows");
-//				System.out.println(startOfCount);
-//				System.out.println(startOfRows);
-				int count = Integer.parseInt(response.substring(startOfCount + 7, startOfRows - 2));
-				if((startOfCount > 0)&&(startOfRows> 0))
-				{
-				String endpoint = String.format("api/query/table?startIndex=%d&endIndex=%d",count,count);
-				uri=prod_uri+endpoint;
-				response = post(uri, header, JSONData);
-				return(response);
+				if ((startOfCount > 0) && (startOfRows > 0)) {
+					int count = Integer.parseInt(response.substring(startOfCount + 7, startOfRows - 2));
+					String endpoint = String.format("api/query/table?startIndex=%d&endIndex=%d", count, count);
+					uri = prod_uri + endpoint;
+					response = post(uri, header, JSONData);
+					return (response);
 				}
 			}
 		} catch (NullPointerException e) {

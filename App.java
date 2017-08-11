@@ -21,7 +21,7 @@ public class App {
 		
 		// Build search filter
 		Map<String, String> searchfilter = new HashMap<String, String>();
-		searchfilter.put("GLOBAL", "x-men,x-men 2");
+		searchfilter.put("GLOBAL", "x-men");
 		searchfilter.put("year", "2000,2016");
 		searchfilter.put("language ", "English");
 		
@@ -47,12 +47,10 @@ public class App {
 		headers = movies.getHeaders();
 		System.out.println(headers);
 
-//		System.out.println("search filter:"+searchfilter);
-//		result = movies.getLastRow(null,searchfilter,null,columns);
-//		System.out.println(result);
-//		
-//		System.out.println("search filter:"+searchfilter);
-//		result = movies.getLastRow(null,searchfilter,null,columns);
-//		System.out.println(result);
+		result = movies.getLastRow(null,searchfilter,null,columns);
+		System.out.println(result);
+		
+		result = movies.getLastRow(null,searchfilter,null,columns);
+		System.out.println(result);
 	}
 }

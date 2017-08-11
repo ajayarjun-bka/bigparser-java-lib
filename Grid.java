@@ -75,11 +75,8 @@ public class Grid {
 			Iterator<Entry<String, String>> iterator = searchFilter.entrySet().iterator();
 			while (iterator.hasNext()) {
 				Map.Entry<String, String> entry = iterator.next();
-				if (entry.getKey().equals("GLOBAL")) {
-					iterator.remove();
-				} else {
+				if (!(entry.getKey().equals("GLOBAL"))) {
 					List<String> multiColumnEntry = new ArrayList<String>(Arrays.asList(entry.getValue().split(",")));
-//					System.out.println("multicolumn :" + multiColumnEntry);
 					for (int i = 0; i < multiColumnEntry.size(); i++) {
 						Map<String, String> temp = new HashMap<String, String>();
 						temp.put("columnStoreName", headers.get(entry.getKey()));
@@ -127,11 +124,8 @@ public class Grid {
 			Iterator<Entry<String, String>> iterator = searchFilter.entrySet().iterator();
 			while (iterator.hasNext()) {
 				Map.Entry<String, String> entry = iterator.next();
-				if (entry.getKey().equals("GLOBAL")) {
-					iterator.remove();
-				} else {
+				if (!(entry.getKey().equals("GLOBAL"))) {
 					List<String> multiColumnEntry = new ArrayList<String>(Arrays.asList(entry.getValue().split(",")));
-//					System.out.println("multicolumn :" + multiColumnEntry);
 					for (int i = 0; i < multiColumnEntry.size(); i++) {
 						Map<String, String> temp = new HashMap<String, String>();
 						temp.put("columnStoreName", headers.get(entry.getKey()));
@@ -161,7 +155,6 @@ public class Grid {
 			data.put("sortKeys", sortList.toString());
 		}
 		data.put("gridId", this.gridId);
-		// System.out.println(data);
 		String response = BigParser.getData(authId, data);
 		return responseToList(response);
 	}
@@ -198,11 +191,8 @@ public class Grid {
 			Iterator<Entry<String, String>> iterator = searchFilter.entrySet().iterator();
 			while (iterator.hasNext()) {
 				Map.Entry<String, String> entry = iterator.next();
-				if (entry.getKey().equals("GLOBAL")) {
-					iterator.remove();
-				} else {
+				if (!(entry.getKey().equals("GLOBAL"))) {
 					List<String> multiColumnEntry = new ArrayList<String>(Arrays.asList(entry.getValue().split(",")));
-//					System.out.println("multicolumn :" + multiColumnEntry);
 					for (int i = 0; i < multiColumnEntry.size(); i++) {
 						Map<String, String> temp = new HashMap<String, String>();
 						temp.put("columnStoreName", headers.get(entry.getKey()));
@@ -272,13 +262,10 @@ public class Grid {
 					keywords.add(temp);
 				}
 			}
-			System.out.println(keywords);
 			Iterator<Entry<String, String>> iterator = searchFilter.entrySet().iterator();
 			while (iterator.hasNext()) {
 				Map.Entry<String, String> entry = iterator.next();
-				if (entry.getKey().equals("GLOBAL")) {
-					iterator.remove();
-				} else {
+				if (!(entry.getKey().equals("GLOBAL"))) {
 					List<String> multiColumnEntry = new ArrayList<String>(Arrays.asList(entry.getValue().split(",")));
 					for (int i = 0; i < multiColumnEntry.size(); i++) {
 						Map<String, String> temp = new HashMap<String, String>();
@@ -316,9 +303,7 @@ public class Grid {
 			data.put("selectColumnsStoreName", selectColumnsStoreName.toString());
 		}
 		data.put("gridId", this.gridId);
-		System.out.println(data);
 		String response = BigParser.getLastRow(authId, data);
-		System.out.println(response);
 		return responseToList(response);
 	}
 
@@ -347,13 +332,19 @@ public class Grid {
 	private List<String> responseToList(String response) {
 		int startOfRows = response.indexOf("rows");
 		int endOfRows = response.indexOf("otherGrids");
-		String result = response.substring(startOfRows + 6, endOfRows - 2);
 		List<String> list = new ArrayList<String>();
-		if (startOfRows != -1) {
-			JSONArray json = new JSONArray(result);
-			for (int i = 0; i < json.length(); i++) {
-				list.add(json.getJSONObject(i).get("data").toString());
+		if ((startOfRows > 0) && (endOfRows > 0)) {
+			String result = response.substring(startOfRows + 6, endOfRows - 2);
+			if (startOfRows != -1) {
+				JSONArray json = new JSONArray(result);
+				for (int i = 0; i < json.length(); i++) {
+					list.add(json.getJSONObject(i).get("data").toString());
+				}
 			}
+		}
+		else
+		{
+			list.add("Your request did not yield any results. Please review your parameters");
 		}
 		return list;
 	}
