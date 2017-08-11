@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -271,6 +272,7 @@ public class Grid {
 					keywords.add(temp);
 				}
 			}
+			System.out.println(keywords);
 			Iterator<Entry<String, String>> iterator = searchFilter.entrySet().iterator();
 			while (iterator.hasNext()) {
 				Map.Entry<String, String> entry = iterator.next();
@@ -314,23 +316,25 @@ public class Grid {
 			data.put("selectColumnsStoreName", selectColumnsStoreName.toString());
 		}
 		data.put("gridId", this.gridId);
+		System.out.println(data);
 		String response = BigParser.getLastRow(authId, data);
+		System.out.println(response);
 		return responseToList(response);
 	}
 
 	public HashMap<String, String> getHeaders() {
 		String response = BigParser.getHeader(authId, gridId);
-		HashMap<String, String> headers;
+		LinkedHashMap<String, String> headers;
 		int startofColumns = response.indexOf("\"columns\"");
 		int startofDictionary = response.indexOf("\"dictionary\"");
 		String columns = response.substring(startofColumns + 10, startofDictionary - 1);
-		headers = (HashMap<String, String>) JSONToMap(columns);
+		headers = (LinkedHashMap<String, String>) JSONToMap(columns);
 		return headers;
 	}
 
 	private Map<String, String> JSONToMap(String JSON) {
 		JSONArray json = new JSONArray(JSON);
-		Map<String, String> map = new HashMap<String, String>();
+		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
 		for (int i = 0; i < json.length(); ++i) {
 			JSONObject record = json.getJSONObject(i);
 			String id = record.getString("columnStoreName");
