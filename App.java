@@ -22,7 +22,7 @@ public class App {
 		// Build search filter
 		Map<String, String> searchfilter = new HashMap<String, String>();
 		searchfilter.put("GLOBAL", "x-men");
-		searchfilter.put("year", "2000,2016");
+//		searchfilter.put("year", "2000,2016");
 		searchfilter.put("language ", "English");
 		
 		//Build Sort 
@@ -47,10 +47,7 @@ public class App {
 		headers = movies.getHeaders();
 		System.out.println(headers);
 
-		result = movies.getLastRow(null,searchfilter,null,columns);
-		System.out.println(result);
-		
-		result = movies.getLastRow(null,searchfilter,null,columns);
+		result = movies.getLastRow(searchfilter,null,columns,4);
 		System.out.println(result);
 	}
 }

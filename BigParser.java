@@ -293,7 +293,7 @@ final public class BigParser {
 		return "please check your request";
 	}
 
-	public static String getLastRow(String authId, Map<String, String> data) {
+	public static String getLastRow(String authId, Integer count, Map<String, String> data) {
 		String uri = "https://www.bigparser.com/APIServices/api/query/table";
 		String JSONData = BigParser.maptoJSON(data);
 		try {
@@ -305,8 +305,17 @@ final public class BigParser {
 				int startOfCount = response.indexOf("count");
 				int startOfRows = response.indexOf("rows");
 				if ((startOfCount > 0) && (startOfRows > 0)) {
-					int count = Integer.parseInt(response.substring(startOfCount + 7, startOfRows - 2));
-					String endpoint = String.format("api/query/table?startIndex=%d&endIndex=%d", count, count);
+					String endpoint = null;
+					int rowcount = Integer.parseInt(response.substring(startOfCount + 7, startOfRows - 2));
+					if (count == null) {
+						endpoint = String.format("api/query/table?startIndex=%d&endIndex=%d",rowcount, rowcount);
+					}
+					else
+					{
+						endpoint = String.format("api/query/table?startIndex=%d&endIndex=%d",
+								((rowcount - count) + 1), rowcount);
+					}
+
 					uri = prod_uri + endpoint;
 					response = post(uri, header, JSONData);
 					return (response);

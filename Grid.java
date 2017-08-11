@@ -234,8 +234,8 @@ public class Grid {
 		return responseToList(response);
 	}
 
-	public List<String> getLastRow(Integer rows, Map<String, String> searchFilter, Map<String, String> sort,
-			String columns) {
+	public List<String> getLastRow(Map<String, String> searchFilter, Map<String, String> sort,
+			String columns,Integer count) {
 		Map<String, String> data = new HashMap<String, String>();
 		List<String> keywords = new ArrayList<String>();
 		List<String> selectColumnsStoreName = new ArrayList<String>();
@@ -245,13 +245,7 @@ public class Grid {
 		JSONArray sortList = null;
 		Map<String, String> headers = new HashMap<String, String>();
 		headers = getHeaders();
-		if (rows != null) {
-			String rowcount = Integer.toString(rows);
-			data.put("rowCount", rowcount);
-		} else {
-			String rowcount = Integer.toString(this.limit);
-			data.put("rowCount", rowcount);
-		}
+
 		if (searchFilter != null) {
 			if (searchFilter.containsKey("GLOBAL")) {
 				List<String> globalList = new ArrayList<String>(Arrays.asList(searchFilter.get("GLOBAL").split(",")));
@@ -303,7 +297,7 @@ public class Grid {
 			data.put("selectColumnsStoreName", selectColumnsStoreName.toString());
 		}
 		data.put("gridId", this.gridId);
-		String response = BigParser.getLastRow(authId, data);
+		String response = BigParser.getLastRow(authId,count, data);
 		return responseToList(response);
 	}
 
