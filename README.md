@@ -201,14 +201,14 @@ Here "year" is the column name and the value can be "ASC" for ascending order an
 ```java
  getHeaders()
 ```
-*To fetch headers of the specified grid*
+*Fetches headers of the specified grid*
 
 ---
 ### getLastRow
 ```java
  getRow(count,searchFilter,sort,columns)
 ```
-*To fetch rows from the grid*
+*Fetches rows from the grid*
 
 **Parameters**
 
