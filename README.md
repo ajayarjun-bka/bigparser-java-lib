@@ -45,7 +45,7 @@ In order to fetch data the user should first login into BigParser account using 
 import bigparser.Auth;
 import bigparser.Grid;
 
-String authId = Auth.login("arjun.bka@gmail.com", "AjayArjun");
+String authId = Auth.login("emailId", "password");
 ```
 authId has to be passed in whenever a grid Object is created 
 ### Step 2:
@@ -59,7 +59,7 @@ import bigparser.Grid;
 
 String gridId = "57a34c80e4b017cc76c37c25";
 
-String authId = Auth.login("arjun.bka@gmail.com", "AjayArjun");
+String authId = Auth.login("emailId", "password");
 
 Grid movies = new Grid(authId, gridId);
 
@@ -74,7 +74,7 @@ import bigparser.Grid;
 
 String gridId = "57a34c80e4b017cc76c37c25";
 
-String authId = Auth.login("arjun.bka@gmail.com", "AjayArjun");
+String authId = Auth.login("emailId", "password");
 
 Grid movies = new Grid(authId, gridId);
 
