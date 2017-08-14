@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+
 /**
  * BpData This class implements the methods needed to connect to BigParser's API
  * to authenticate and fetch the required data
@@ -136,11 +137,23 @@ class BigParser {
 		}
 		String JSONData = BigParser.maptoJSON(data);
 		String response = post(uri, header, JSONData);
-		if (response.length() > 0) {
-			int startOfAuthID = response.indexOf("authId");
+		int startOfAuthID = response.indexOf("authId");
+		if (startOfAuthID > 0) {
 			authId = response.substring(startOfAuthID + 9, startOfAuthID + 45);
+			return authId;
 		}
-		return authId;
+		else
+		{
+			try{
+				throw new RuntimeException();
+			}
+			catch (Exception e)
+			{
+				System.out.println("Unauthorized User.Please check your credentials");
+				System.exit(-1);
+			}
+			return null;
+		}
 	}
 
 	/**
