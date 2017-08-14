@@ -45,9 +45,9 @@ In order to fetch data the user should first login into BigParser account using 
 import bigparser.Auth;
 import bigparser.Grid;
 
-String authId = Auth.login("arjun.bka@gmail.com", "AjayArjun");
+String authId = Auth.login("emailId", "password");
 ```
-authId has to be passed in whenver a grid Object is created 
+authId has to be passed in whenever a grid Object is created 
 ### Step 2:
 
 Create a object for the grid from which you wish to fetch data.
@@ -59,7 +59,7 @@ import bigparser.Grid;
 
 String gridId = "57a34c80e4b017cc76c37c25";
 
-String authId = Auth.login("arjun.bka@gmail.com", "AjayArjun");
+String authId = Auth.login("emailId", "password");
 
 Grid movies = new Grid(authId, gridId);
 
@@ -74,7 +74,7 @@ import bigparser.Grid;
 
 String gridId = "57a34c80e4b017cc76c37c25";
 
-String authId = Auth.login("arjun.bka@gmail.com", "AjayArjun");
+String authId = Auth.login("emailId", "password");
 
 Grid movies = new Grid(authId, gridId);
 
@@ -111,14 +111,14 @@ System.out.println(result);
 ]
 ```
 ---
-### Description of Available methods:
+### Description of Available Auth methods:
 
 
 ### login
 ```java
  login(emailId,password)
 ```
-*Logins into BigParser account and returns the authId*
+*Logs into a BigParser account and returns the authId*
 
 **Parameters**
 
@@ -129,12 +129,32 @@ System.out.println(result);
    `password` - password to login into BigParser account
    
 ---
+### Description of Grid Constructor:
+
+
+```java
+Grid movies = new Grid(authId, gridId);
+```
+*Creates a Grid Object*
+
+**Parameters**
+
+#### ***Required Parameters:***
+ 
+   `authId` - authId of you account retreived from login method
+   
+   `gridId` - gridId of your grid. It can be found in the url of the grid.
+   
+---
+
+### Description of Available Grid methods:
+
 
 ### getRows
 ```java
  getRows(rows,searchFilter,sort,columns)
 ```
-*To fetch rows from the grid*
+*Fetches rows from the grid*
 
 This method has 4 different signatures
 
@@ -159,7 +179,7 @@ This method has 4 different signatures
        {"GLOBAL": "x-men", "language ": "english,French"}
   ```
     
-Anything that has to be searched on global level should go under the key "GLOBAL". For terms which are to be searched on columns should be specified as key and values, where key is the column name and value is the term to be searched. 
+Anything that has to be searched on a global level should go in to the list under the key "GLOBAL". Terms which are to be searched within columns should be specified as key and value(s) where key is the column name and value(s) is the term(s) to be searched.
 
    `sort` - Map containing the columns to be sorted and their order 
    
@@ -202,7 +222,7 @@ Here "year" is the column name and the value can be "ASC" for ascending order an
        {"GLOBAL": "x-men", "language ": "english,French"}
   ```
     
-Anything that has to be searched on global level should go under the key "GLOBAL". For terms which are to be searched on columns should be specified as key and values, where key is the column name and value is the term to be searched. 
+Anything that has to be searched on a global level should go in to the list under the key "GLOBAL". Terms which are to be searched within columns should be specified as key and value(s) where key is the column name and value(s) is the term(s) to be searched.
 
    `sort` - Map containing the columns to be sorted and their order 
    
