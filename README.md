@@ -217,7 +217,6 @@ Here "year" is the column name and the value can be "ASC" for ascending order an
 ```java
        "film name ,release date"
   ```
----
 ****
 
 ## Sample Code
@@ -225,33 +224,45 @@ Here "year" is the column name and the value can be "ASC" for ascending order an
 *Replace emailId and password in the login function*
 
 ```java
-from bigparser import grid
-from bigparser import auth
+public class App {
 
-gridId = "57a34c80e4b017cc76c37c25"
+	public static void main(String args[]) {
+		String gridId = "57a34c80e4b017cc76c37c25";
+		String authId = Auth.login("emailId", "password");
+		Grid movies = new Grid(authId, gridId);
+		List<String> result = new ArrayList<String>();
 
-authId = auth.login("emailId", "password")
+		// Build search filter
+		Map<String, String> searchfilter = new HashMap<String, String>();
+		searchfilter.put("GLOBAL", "x-men");
+		searchfilter.put("year", "2000,2016");
+		searchfilter.put("language ", "English");
 
-movies = grid(authId, gridId)
+		// Build Sort
+		Map<String, String> sort = new HashMap<String, String>();
+		sort.put("filmname ", "ASC");
+		sort.put("year", "DSC");
 
-headers = movies.getHeader()
-print(headers)
+		// columns to be displayed
+		String columns = "film name ,year";
 
-rows = movies.getRows(searchfilter={'year': '20005'},columns=['film name ','language '],sort=[{'film name ':'ASC'}])
-print(rows)
+		result = movies.getRows();
+		System.out.println(result);
 
+		result = movies.getRows(20, null, null, columns);
+		System.out.println(result);
 
-rows = movies.getRows(searchfilter={'GLOBAL': ['x-men'], 'language ': 'english'}, sort=[{"year": "ASC"}],columns=['film name ', 'release date'])
-print(rows)
+		result = movies.getRows(null, searchfilter, sort, columns);
+		System.out.println(result);
 
-result = movies.getLastRow(count=2, columns=['film name ', 'language '])
-print(result)
+		Map<String, String> headers = new HashMap<>();
+		headers = movies.getHeaders();
+		System.out.println(headers);
 
-result = movies.getRange(rows=5, columns=2)
-print(result)
-
-rows = movies.getRows(searchfilter={'GLOBAL': ['x-men'], 'language ': 'english'}, sort=[{"year": "ASC"}],columns=['film name ', 'release date'])
-print(rows)
+		result = movies.getLastRow(searchfilter, null, columns, 4);
+		System.out.println(result);
+	}
+}
 
 
 ```
