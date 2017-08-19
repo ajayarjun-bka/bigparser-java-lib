@@ -4,7 +4,7 @@ Java library for BigParser's API to fetch data from grids.
 
 
 ## How to Install the package?
-Add maven dependency here
+[Lin to download jars](https://github.com/ajayarjun-bka/java-jars)
 
  
 
